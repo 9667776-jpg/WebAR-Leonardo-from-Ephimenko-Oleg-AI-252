@@ -121,14 +121,14 @@
 
                 mainContainer = new THREE.Group();
 
-                // ИСПРАВЛЕННЫЕ ПУТИ НИЖЕ
+                // ФИНАЛЬНЫЕ ПРАВИЛЬНЫЕ ПУТИ НИЖЕ
                 const patternNames = ["data/pattern-gear.patt" ,"" ,""];
                 const patternBarcode = [-1 ,2 ,3];
                 const modes = ["image" ,"image" ,"image"];
                 const modelFiles = ["" ,"" ,""];
-                const imageFiles = ["data/1_student.jpg" ,"data/1_author.jpg" ,"data/3_machine.jpg"];
+                const imageFiles = ["1_student.jpg" ,"1_author.jpg" ,"3_machine.jpg"];
                 const videoFiles = ["" ,"" ,""];
-                const audioFiles = ["data/1_student.mp3.mp3" ,"data/2_author.mp3.mp3" ,"data/3_machine.mp3.mp3"];
+                const audioFiles = ["1_student.mp3.mp3" ,"2_author.mp3.mp3" ,"3_machine.mp3.mp3"];
                 const repeatOptions = ["false" ,"false" ,"false"];
   
                 const markerRoots = [];
@@ -197,11 +197,17 @@
                                 }
                                 resolve(sound)
                             });
-                        }))
+                        }).catch(err => {
+                            console.warn("Audio load error:", err);
+                        }));
                     }
                 }
 
                 Promise.all(contentPromises).then(() => {
+                    contentInitialized = true;
+                    loader.style.opacity = '0';
+                }).catch(err => {
+                    console.warn("Content load warning:", err);
                     contentInitialized = true;
                     loader.style.opacity = '0';
                 });
